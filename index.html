@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Walking Tour Genova — Discover La Superba</title>
+  <meta name="description" content="A free 2-hour English walking tour through the heart of Genova. Tip-based. Daily departures from Piazza De Ferrari." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0B1F3A;
+      --blue: #1A4A7A;
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --cream: #F8F4ED;
+      --warm: #EDE8DF;
+      --text: #1A1714;
+      --muted: #6B6259;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 2.5rem;
+      background: rgba(11,31,58,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-book {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      font-weight: 500 !important;
+      opacity: 1 !important;
+    }
+    .nav-book:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.06) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,0.06) 60px);
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,74,122,0.6) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      position: relative;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-tag::before { content: ''; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 400;
+      color: white;
+      line-height: 1.05;
+      margin-bottom: 0.3em;
+      position: relative;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      position: relative;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-pills {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 2.8rem;
+      position: relative;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .pill {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      padding: 0.45rem 1rem;
+      border-radius: 2px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1rem 2.8rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      position: relative;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      animation: fadeUp 1s 0.8s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.6), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 860px; margin: 0 auto; }
+    .section-inner.wide { max-width: 1100px; }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--gold); opacity: 0.4; }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── STOPS ── */
+    .stops { display: flex; flex-direction: column; gap: 0; }
+    .stop {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0 1.5rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      align-items: start;
+      transition: background 0.2s;
+    }
+    .stop:last-child { border-bottom: none; }
+    .stop-num {
+      width: 48px; height: 48px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .stop h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .stop p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── DARK SECTION ── */
+    .dark-section {
+      background: var(--navy);
+      color: white;
+      padding: 6rem 2rem;
+    }
+    .dark-section .eyebrow { color: var(--gold-light); }
+    .dark-section .eyebrow::after { background: var(--gold-light); }
+    .dark-section h2 { color: white; }
+    .dark-section .section-desc { color: rgba(255,255,255,0.55); }
+
+    /* ── FEATURES ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-top: 2.5rem;
+    }
+    .feature {
+      background: rgba(11,31,58,0.95);
+      padding: 2rem 1.75rem;
+      border: none;
+    }
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .feature h4 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: white;
+    }
+    .feature p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+    /* ── TIP ── */
+    .tip-block {
+      background: var(--warm);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2px;
+      padding: 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .tip-block::before {
+      content: '€';
+      position: absolute;
+      font-family: var(--serif);
+      font-size: 18rem;
+      color: rgba(201,168,76,0.06);
+      top: -2rem; right: -1rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .tip-block .eyebrow { justify-content: center; }
+    .tip-block .eyebrow::after { display: none; }
+    .tip-block h2 { font-size: 2rem; margin-bottom: 0.75rem; }
+    .tip-block p { font-size: 0.95rem; color: var(--muted); max-width: 480px; margin: 0 auto 2rem; line-height: 1.8; }
+    .tip-amount {
+      font-family: var(--serif);
+      font-size: 4rem;
+      font-weight: 400;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .tip-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; }
+    .faq-item {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 1.5rem 0;
+    }
+    .faq-item:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+    .faq-q {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .faq-a { font-size: 0.92rem; color: var(--muted); line-height: 1.8; }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .contact-info h2 { margin-bottom: 1rem; }
+    .contact-info p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-detail {
+      display: flex; align-items: flex-start; gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+    .contact-detail-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--warm);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .contact-detail-text strong { display: block; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+    .contact-detail-text span { font-size: 0.92rem; color: var(--muted); }
+
+    .contact-form-card {
+      background: white;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 2px;
+      padding: 2.5rem;
+    }
+    .contact-form-card h3 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      color: var(--text);
+      background: white;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .submit-btn {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover { background: var(--blue); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080F1C;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .section { padding: 4rem 1.25rem; }
+      .tip-block { padding: 2rem 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Walk Genova</div>
+  <ul class="nav-links">
+    <li><a href="#tour">The Tour</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#book" class="nav-book">Book Free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">Free Walking Tour · Genova</div>
+  <h1>Discover<br><em>La Superba</em></h1>
+  <p class="hero-sub">A 2-hour English walking tour through the medieval heart of Genova. Stories, secrets, and cobblestones — starting from Piazza De Ferrari.</p>
+  <div class="hero-pills">
+    <span class="pill">⏱ 2 hours</span>
+    <span class="pill">🇬🇧 English only</span>
+    <span class="pill">💰 Tip-based</span>
+    <span class="pill">📍 Piazza De Ferrari</span>
+    <span class="pill">👥 Max 12 people</span>
+  </div>
+  <a href="#book" class="hero-cta">Reserve your free spot</a>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- ROUTE -->
+<section class="section" id="tour">
+  <div class="section-inner">
+    <div class="eyebrow">The route</div>
+    <h2>Two hours in the heart<br>of an ancient republic</h2>
+    <p class="section-desc">We stay close to Piazza De Ferrari, exploring the palaces, alleys, and sacred spaces that made Genova one of the most powerful cities in Europe.</p>
+    <div class="stops">
+      <div class="stop">
+        <div class="stop-num">I</div>
+        <div>
+          <h3>Piazza De Ferrari</h3>
+          <p>Our meeting point — Genova's grand symbolic centre, dominated by the iconic bronze fountain and surrounded by neoclassical façades. We begin with the city's modern identity before diving into its ancient soul.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">II</div>
+        <div>
+          <h3>Palazzo Ducale</h3>
+          <p>Right on the square, the palace of the Doges — rulers of the Genoese Republic for centuries. We uncover the political intrigues, the prisoners, and the art hidden inside its grand halls.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">III</div>
+        <div>
+          <h3>Cattedrale di San Lorenzo</h3>
+          <p>Just steps away — the striking black-and-white striped Gothic cathedral consecrated in 1118. Home to relics, cannonballs, and legends that span nearly a thousand years.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">IV</div>
+        <div>
+          <h3>The Caruggi — ancient alleys</h3>
+          <p>We plunge into the medieval labyrinth of narrow lanes — Europe's largest medieval historic centre. Here tradespeople, sailors, and nobles once lived side by side in a city bursting with commerce.</p>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">V</div>
+        <div>
+          <h3>Piazza Matteotti & Teatro Carlo Felice</h3>
+          <p>Adjacent to De Ferrari, Genova's opera house and civic square complete the grand neoclassical ensemble of the city centre. We finish here with a view of the whole picture — past and present.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY JOIN (dark) -->
+<section class="dark-section" id="about">
+  <div class="section-inner wide">
+    <div class="eyebrow">Why join us</div>
+    <h2>More than a walk</h2>
+    <p class="section-desc">We believe the best way to understand a city is through its stories — not its monuments alone.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🏛</div>
+        <h4>Local insight</h4>
+        <p>Stories and details you won't find in any guidebook — the real Genova, told by someone who lives it.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🇬🇧</div>
+        <h4>English only</h4>
+        <p>Conducted entirely in English — perfect for international visitors, expats, and Erasmus students.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">👥</div>
+        <h4>Small groups</h4>
+        <p>Maximum 12 people. You can ask questions, slow down, and actually connect with the guide.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <h4>Zero upfront cost</h4>
+        <p>The tour is completely free. No payment, no card, no awkward pre-checkout. Just show up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIP -->
+<section class="section">
+  <div class="section-inner">
+    <div class="tip-block">
+      <div class="eyebrow">Pricing</div>
+      <h2>Pay what feels right</h2>
+      <p>The tour is free. At the end, if you enjoyed it, a tip is your way of saying thank you. There is no obligation whatsoever — though every euro helps keep this tour running.</p>
+      <div class="tip-amount">€10 – €30</div>
+      <div class="tip-label">Suggested tip per person</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background: var(--warm);">
+  <div class="section-inner">
+    <div class="eyebrow">FAQ</div>
+    <h2>Good to know</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <p class="faq-q">Where exactly do we meet?</p>
+        <p class="faq-a">At the central fountain in Piazza De Ferrari — the large bronze fountain right in the middle of the square. Look for your guide holding a "Walk Genova" sign. Please arrive 5–10 minutes early.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">When does the tour run?</p>
+        <p class="faq-a">Daily at 10:00 AM and 3:00 PM. We run in all weather, so dress accordingly. Tours may be cancelled in exceptional circumstances — we'll always notify you in advance if you've booked.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Do I need to book in advance?</p>
+        <p class="faq-a">Booking is strongly recommended so we can manage group size and confirm your spot. Use the form below or send us a WhatsApp — it takes less than a minute.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What should I wear?</p>
+        <p class="faq-a">Comfortable walking shoes are essential — Genova's cobblestones are beautiful but uneven. Bring water in summer. A light layer in winter months goes a long way.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is the tour accessible?</p>
+        <p class="faq-a">The route includes some steps and narrow alleys typical of the old city. If you have specific accessibility needs, please contact us before booking and we'll do our best to accommodate you.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can children join?</p>
+        <p class="faq-a">Absolutely — children are welcome and usually love the stories about pirates, merchants, and medieval life. Under 12s join free (no tip expected).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK / CONTACT -->
+<section class="section" id="book">
+  <div class="section-inner wide">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="eyebrow">Book your spot</div>
+        <h2>Ready to explore<br><em>Genova</em>?</h2>
+        <p>Reserve your spot using the form — it's free and takes 30 seconds. You'll hear back within a few hours to confirm.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Meeting point</strong>
+            <span>Fountain, Piazza De Ferrari, Genova</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🕙</div>
+          <div class="contact-detail-text">
+            <strong>Departure times</strong>
+            <span>Daily 10:00 AM & 3:00 PM</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">💬</div>
+          <div class="contact-detail-text">
+            <strong>WhatsApp</strong>
+            <span>+39 XXX XXX XXXX</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉️</div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            <span>hello@walkgenova.com</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <h3>Reserve your spot</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your name</label>
+            <input type="text" placeholder="e.g. Sarah" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@email.com" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preferred date</label>
+            <input type="date" />
+          </div>
+          <div class="form-group">
+            <label>Tour time</label>
+            <select>
+              <option>10:00 AM</option>
+              <option>3:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Number of people</label>
+          <select>
+            <option>1 person</option>
+            <option>2 people</option>
+            <option>3 people</option>
+            <option>4 people</option>
+            <option>5+ people</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message (optional)</label>
+          <textarea placeholder="Any questions or special requests?"></textarea>
+        </div>
+        <button class="submit-btn" onclick="alert('Thank you! We will confirm your spot shortly.')">Send booking request</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><span>Walk Genova</span> · Free Walking Tour · English · Tip-based</p>
+  <p style="margin-top: 0.4rem;">Daily departures from Piazza De Ferrari · 10:00 AM & 3:00 PM</p>
+  <p style="margin-top: 0.4rem;">© 2025 Walk Genova. Made with love in Liguria.</p>
+</footer>
+
+</body>
+</html>
